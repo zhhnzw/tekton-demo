@@ -12,7 +12,7 @@ spec:
       name: git-source
   params:
   - name: imageUrl
-    value: 2804696160/teckton-demo
+    value: 2804696160/tekton-demo
   - name: imageTag
     value: v0.1
   - name: pathToDockerFile
