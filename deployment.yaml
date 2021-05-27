@@ -2,22 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    name: tekton_test
-  name: tekton_test
+    name: tekton-test
+  name: tekton-test
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: tekton_test
+      name: tekton-test
   strategy: {}
   template:
     metadata:
       labels:
-        name: tekton_test
+        name: tekton-test
     spec:
       containers:
       - image: 2804696160/teckton_demo:v0.1
-        name: tekton_test
+        name: tekton-test
         imagePullPolicy: Always
 status: {}
 ---
@@ -27,14 +27,14 @@ metadata:
   name: tekton-svc
   namespace: default
   labels:
-    name: tekton_test
+    name: tekton-test
 spec:
   type: NodePort
   ports:
   - port: 8080
     protocol: TCP
     targetPort: 8080
-    name: tekton_web
+    name: tekton-web
     nodePort: 8080
   selector:
-    name: tekton_test
+    name: tekton-test
