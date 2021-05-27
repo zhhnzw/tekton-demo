@@ -16,7 +16,7 @@ spec:
         name: tekton-test
     spec:
       containers:
-      - image: 2804696160/teckton_demo:v0.1
+      - image: 2804696160/teckton-demo:v0.1
         name: tekton-test
         imagePullPolicy: Always
 status: {}

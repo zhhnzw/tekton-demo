@@ -12,7 +12,7 @@ spec:
       name: git-source
   params:
   - name: imageUrl
-    value: 2804696160/teckton_demo
+    value: 2804696160/teckton-demo
   - name: imageTag
     value: v0.1
   - name: pathToDockerFile
@@ -20,5 +20,5 @@ spec:
   - name: pathToYamlFile
     value: deployment.yaml
 #  - name: pathToContext
-#    value: ~/workspace/mygithub/tekton_test
+#    value: ~/workspace/mygithub/tekton-demo
   serviceAccountName: tekton-test
