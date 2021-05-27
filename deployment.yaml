@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: tekton_test
+  name: tekton_test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: tekton_test
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        name: tekton_test
+    spec:
+      containers:
+      - image: 2804696160/teckton_demo:v0.1
+        name: tekton_test
+        imagePullPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tekton-svc
+  namespace: default
+  labels:
+    name: tekton_test
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+    name: tekton_web
+    nodePort: 8080
+  selector:
+    name: tekton_test

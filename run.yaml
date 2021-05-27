@@ -1,0 +1,24 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineRun
+metadata:
+  generateName: generic-pr
+  name: generic-pipeline-run
+spec:
+  pipelineRef:
+    name: build-pipeline
+  resources:
+  - name: git-source
+    resourceRef:
+      name: git-source
+  params:
+  - name: imageUrl
+    value: 2804696160/teckton_demo
+  - name: imageTag
+    value: v0.1
+  - name: pathToDockerFile
+    value: Dockerfile
+  - name: pathToYamlFile
+    value: deployment.yaml
+#  - name: pathToContext
+#    value: ~/workspace/mygithub/tekton_test
+  serviceAccountName: tekton-test
