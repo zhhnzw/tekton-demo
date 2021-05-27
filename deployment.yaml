@@ -35,6 +35,6 @@ spec:
     protocol: TCP
     targetPort: 8080
     name: tekton-web
-    nodePort: 8080
+    nodePort: 30000
   selector:
     name: tekton-test
