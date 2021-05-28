@@ -41,9 +41,6 @@ func NewClients(clusterName, namespace string) *Clients {
 	// 创建 k8s 客户端
 	c.KubeClient, err = kubernetes.NewForConfig(k8sConfig)
 	if err != nil {
-		log.Fatalf("%v", err)
-	}
-	if err != nil {
 		log.Fatalf("failed to create kubeclient from config file at %s: %s", configPath, err)
 	}
 
