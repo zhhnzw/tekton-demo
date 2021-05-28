@@ -10,12 +10,12 @@ EXPOSE 8080
 # 时区
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 
-RUN mkdir /tekton_test
+RUN mkdir /tekton-demo
 
-COPY . /tekton_test
+COPY . /tekton-demo
 
-WORKDIR /tekton_test
+WORKDIR /tekton-demo
 
 RUN export GOPROXY=https://goproxy.io && go build
 
-ENTRYPOINT ["./tekton_test"]
+ENTRYPOINT ["./tekton-demo"]
