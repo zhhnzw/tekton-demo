@@ -3,10 +3,9 @@ package operator
 import (
 	"context"
 	"fmt"
-	"github.com/tektoncd/pipeline/pkg/apis/pipeline/v1beta1"
+	"github.com/tektoncd/pipeline/pkg/apis/pipeline/v1alpha1"
 	"github.com/tektoncd/pipeline/pkg/client/clientset/versioned"
 	typedv1alpha1 "github.com/tektoncd/pipeline/pkg/client/clientset/versioned/typed/pipeline/v1alpha1"
-	typedv1beta1 "github.com/tektoncd/pipeline/pkg/client/clientset/versioned/typed/pipeline/v1beta1"
 	resourceversioned "github.com/tektoncd/pipeline/pkg/client/resource/clientset/versioned"
 	resourcev1alpha1 "github.com/tektoncd/pipeline/pkg/client/resource/clientset/versioned/typed/resource/v1alpha1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -20,11 +19,11 @@ import (
 
 type Clients struct {
 	KubeClient             *kubernetes.Clientset
-	PipelineClient         typedv1beta1.PipelineInterface
-	ClusterTaskClient      typedv1beta1.ClusterTaskInterface
-	TaskClient             typedv1beta1.TaskInterface
-	TaskRunClient          typedv1beta1.TaskRunInterface
-	PipelineRunClient      typedv1beta1.PipelineRunInterface
+	PipelineClient         typedv1alpha1.PipelineInterface
+	ClusterTaskClient      typedv1alpha1.ClusterTaskInterface
+	TaskClient             typedv1alpha1.TaskInterface
+	TaskRunClient          typedv1alpha1.TaskRunInterface
+	PipelineRunClient      typedv1alpha1.PipelineRunInterface
 	PipelineResourceClient resourcev1alpha1.PipelineResourceInterface
 	ConditionClient        typedv1alpha1.ConditionInterface
 	RunClient              typedv1alpha1.RunInterface
@@ -61,11 +60,11 @@ func NewClients(clusterName, namespace string) *Clients {
 	if err != nil {
 		log.Fatalf("failed to create pipeline clientset from config file at %s: %s", configPath, err)
 	}
-	c.PipelineClient = cs.TektonV1beta1().Pipelines(namespace)
-	c.ClusterTaskClient = cs.TektonV1beta1().ClusterTasks()
-	c.TaskClient = cs.TektonV1beta1().Tasks(namespace)
-	c.TaskRunClient = cs.TektonV1beta1().TaskRuns(namespace)
-	c.PipelineRunClient = cs.TektonV1beta1().PipelineRuns(namespace)
+	c.PipelineClient = cs.TektonV1alpha1().Pipelines(namespace)
+	c.ClusterTaskClient = cs.TektonV1alpha1().ClusterTasks()
+	c.TaskClient = cs.TektonV1alpha1().Tasks(namespace)
+	c.TaskRunClient = cs.TektonV1alpha1().TaskRuns(namespace)
+	c.PipelineRunClient = cs.TektonV1alpha1().PipelineRuns(namespace)
 	c.PipelineResourceClient = rcs.TektonV1alpha1().PipelineResources(namespace)
 	c.ConditionClient = cs.TektonV1alpha1().Conditions(namespace)
 	c.RunClient = cs.TektonV1alpha1().Runs(namespace)
@@ -100,20 +99,20 @@ func CreatePipeline(clients *Clients) {
 
 func Run(clients *Clients) {
 	ctx, _ := context.WithTimeout(context.Background(), timeout)
-	run := &v1beta1.PipelineRun{
+	run := &v1alpha1.PipelineRun{
 		ObjectMeta: metav1.ObjectMeta{
 			Name: "generic-pipeline-run",
 		},
-		Spec: v1beta1.PipelineRunSpec{
-			PipelineRef: &v1beta1.PipelineRef{Name: "build-pipeline"},
-			Resources: []v1beta1.PipelineResourceBinding{
-				{Name: "git-source", ResourceRef: &v1beta1.PipelineResourceRef{Name: "git-source"}},
+		Spec: v1alpha1.PipelineRunSpec{
+			PipelineRef: &v1alpha1.PipelineRef{Name: "build-pipeline"},
+			Resources: []v1alpha1.PipelineResourceBinding{
+				{Name: "git-source", ResourceRef: &v1alpha1.PipelineResourceRef{Name: "git-source"}},
 			},
-			Params: []v1beta1.Param{
-				{Name: "imageUrl", Value: v1beta1.ArrayOrString{StringVal: "2804696160/tekton-demo"}},
-				{Name: "imageTag", Value: v1beta1.ArrayOrString{StringVal: "v0.1"}},
-				{Name: "pathToDockerFile", Value: v1beta1.ArrayOrString{StringVal: "Dockerfile"}},
-				{Name: "pathToYamlFile", Value: v1beta1.ArrayOrString{StringVal: "deployment.yaml"}},
+			Params: []v1alpha1.Param{
+				{Name: "imageUrl", Value: v1alpha1.ArrayOrString{StringVal: "2804696160/tekton-demo"}},
+				{Name: "imageTag", Value: v1alpha1.ArrayOrString{StringVal: "v0.1"}},
+				{Name: "pathToDockerFile", Value: v1alpha1.ArrayOrString{StringVal: "Dockerfile"}},
+				{Name: "pathToYamlFile", Value: v1alpha1.ArrayOrString{StringVal: "deployment.yaml"}},
 			},
 			ServiceAccountName: "tekton-test",
 		},
